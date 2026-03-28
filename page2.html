@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>page2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, #2a0505 0%, #050101 70%, #000000 100%);
+            font-family: 'Tajawal', sans-serif;
+            color: white;
+            display: flex; justify-content: center; align-items: center;
+            overflow: hidden; /* الصفحة ثابتة تماماً */
+            position: relative;
+        }
+
+        #hearts-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; pointer-events: none;
+        }
+
+        /* الكارت المرن والذكي */
+        .love-card {
+            width: 90%;
+            max-width: 380px;
+            /* الإعدادات السحرية للتمدد ثم التثبيت */
+            display: flex;
+            flex-direction: column;
+            max-height: 80vh; /* لن يتجاوز 80% من طول الشاشة */
+            background: rgba(20, 0, 0, 0.4); 
+            backdrop-filter: blur(12px);
+            border: 1.5px solid rgba(255, 26, 77, 0.4);
+            border-radius: 40px;
+            padding: 30px 20px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 5;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease; /* حركة ناعمة للتمدد */
+        }
+
+        /* منطقة النص هي التي ستحتوي على السكرول داخلياً */
+        .text-scroll-area {
+            overflow-y: auto; /* السكرول هنا فقط */
+            flex-grow: 1;
+            padding-right: 5px;
+            text-align: right;
+        }
+
+        /* إخفاء شريط التمرير لمظهر احترافي */
+        .text-scroll-area::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        #typing-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.9;
+            white-space: pre-wrap;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2rem;
+            background-color: #ff1a4d;
+            margin-right: 5px;
+            vertical-align: middle;
+            animation: blink 0.7s infinite;
+            box-shadow: 0 0 10px #ff1a4d;
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        #final-button {
+            display: none;
+            opacity: 0;
+            margin-top: 20px;
+            padding: 15px 0;
+            width: 100%;
+            background: linear-gradient(to bottom, #b30000 0%, #660000 100%);
+            border: none;
+            border-radius: 40px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
+            animation: slideUp 0.8s ease-out forwards, pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        /* قلوب نيون فائقة السطوع */
+        .neon-heart {
+            position: absolute;
+            color: #ff1a4d;
+            text-shadow: 0 0 10px #ff1a4d, 0 0 20px #ff1a4d;
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="hearts-bg"></div>
+
+    <div class="love-card" id="main-card">
+        <div class="text-scroll-area" id="scroll-box">
+            <span id="typing-text"></span><span id="cursor" class="cursor"></span>
+        </div>
+        
+        <a href="page3.html" id="final-button">NEXT</a>
+    </div>
+
+    <script>
+        const myMessage = `النهارده بجد يوم مميز جدًا بالنسبة ليا، عشان كملنا سنة مع بعض ❤️
+سنة كاملة وإنتي فيها أجمل حاجة حصلتلي، وأقرب حد لقلبي، وأكتر شخص بحس معاه بالراحة والفرحة.
+
+في السنة دي حصل بينا مواقف كتير، لحظات حلوة، وضحك، وزعل بسيط، وكل ده خلاني أتأكد أكتر إنك شخص مميز جدًا في حياتي، وإن وجودك معايا فرق معايا بجد.
+
+أنا يمكن مش بعرف أعبّر دايمًا، بس الحقيقة إنك بقيتي جزء كبير من يومي ومن تفكيري ومن قلبي كمان.
+وبقيت بحب وجودك، وكلامك، واهتمامك، وكل تفصيلة صغيرة فيكي.
+
+كل سنة وإنتي حبيبتي، وكل سنة وإنتي أجمل حاجة في حياتي ❤️
+ويارب دي تبقى أول سنة من سنين كتير حلوة نفضل فيهم سوا ونفضل بنحب بعض أكتر كل يوم ❤️`;
+
+        const speed = 100; 
+        let i = 0;
+        const target = document.getElementById("typing-text");
+        const cursor = document.getElementById("cursor");
+        const button = document.getElementById("final-button");
+        const scrollBox = document.getElementById("scroll-box");
+
+        function startTyping() {
+            if (i < myMessage.length) {
+                const char = myMessage.charAt(i);
+                target.innerHTML += (char === '\n' ? '<br>' : char);
+                i++;
+                
+                // سكرول داخلي لملاحقة النص
+                scrollBox.scrollTop = scrollBox.scrollHeight;
+                
+                setTimeout(startTyping, speed);
+            } else {
+                cursor.style.display = "none";
+                button.style.display = "block";
+            }
+        }
+
+        function createNeonHeart() {
+            const container = document.getElementById('hearts-bg');
+            const heart = document.createElement('div');
+            heart.innerHTML = "❤";
+            heart.className = 'neon-heart';
+            const startX = Math.random() * window.innerWidth;
+            heart.style.left = startX + 'px';
+            heart.style.top = '110vh';
+            container.appendChild(heart);
+            const duration = Math.random() * 5 + 4;
+            heart.animate([
+                { top: '110vh', opacity: 0 },
+                { opacity: 1, offset: 0.2 },
+                { top: '-15vh', opacity: 0 }
+            ], { duration: duration * 1000, easing: 'linear' }).onfinish = () => heart.remove();
+        }
+
+        window.onload = () => {
+            setInterval(createNeonHeart, 600); 
+            setTimeout(startTyping, 1000);
+        };
+    </script>
+</body>
+</html>

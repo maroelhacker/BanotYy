@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>index</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box; }
+    
+    /* تعديل السكرول هنا */
+    html { height: 100%; }
+    body {
+      font-family:'Cairo',sans-serif;
+      min-height: 100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:
+        radial-gradient(circle at top, rgba(255,0,0,0.15), transparent 35%),
+        linear-gradient(180deg,#050505,#120000,#1d0000,#090909);
+      position:relative;
+      padding:40px 20px; /* زيادة البادينج عشان السكرول يظهر براحة */
+      overflow-y: auto; /* يسمح بالسكرول العمودي */
+      overflow-x: hidden; /* يمنع السكرول العرضي */
+    }
+
+    #contentFrame {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      border: none; z-index: 9999;
+      background: #000;
+    }
+
+    .bg-hearts{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+    .bg-hearts span{ position:absolute; color:rgba(255,50,50,0.18); font-size:16px; animation:fall linear infinite; }
+    
+    /* توزيع القلوب */
+    .bg-hearts span:nth-child(1){ left:5%; animation-duration:8s; top:-20px; }
+    .bg-hearts span:nth-child(2){ left:12%; animation-duration:10s; top:-40px; }
+    .bg-hearts span:nth-child(3){ left:50%; animation-duration:7s; top:-30px; }
+    .bg-hearts span:nth-child(4){ left:80%; animation-duration:9s; top:-10px; }
+
+    .card{
+      width:100%; max-width:390px; min-height:600px; border-radius:42px; padding:30px 24px;
+      background:rgba(40,40,40,0.22); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      border:1.5px solid rgba(255,60,60,0.35); text-align:center; position:relative; z-index: 10;
+      margin: auto; /* لضمان توسط الكارت عند السكرول */
+    }
+
+    .year-badge{ width:110px; margin:0 auto 35px; padding:10px 0; border-radius:999px; background:#070707; border:2px solid rgba(255,60,60,0.65); color:#fff; font-size:18px; font-weight:700; }
+    .heart-icon{ font-size:54px; color:#ff3a3a; margin-bottom:26px; animation:pulseHeart 2s infinite ease-in-out; }
+    .title{ font-family:'Amiri', serif; font-size:42px; font-weight:700; color:#ff4a4a; margin-bottom:12px; line-height:1.4; }
+    .subtitle{ font-size:22px; color:#d0d0d0; margin-bottom:28px; }
+    .password-box input{ width:100%; padding:18px; border-radius:999px; background:rgba(255,255,255,0.08); color:#fff; font-size:20px; text-align:center; border:1px solid rgba(255,255,255,0.04); outline:none; }
+    .enter-btn{ width:100%; padding:18px; border-radius:999px; font-size:26px; font-weight:700; color:#fff; background:linear-gradient(90deg,#2b0000,#6b0000,#990000); cursor:pointer; animation:pulseBtn 2.4s infinite ease-in-out; border:none; }
+    .error{ margin-top:16px; color:#ffb3b3; display:none; }
+
+    @keyframes pulseHeart{ 0%,100%{transform:scale(1);} 50%{transform:scale(1.12);} }
+    @keyframes pulseBtn{ 0%,100%{transform:scale(1);} 50%{transform:scale(1.03);} }
+    @keyframes fall{ 0%{transform:translateY(-50px); opacity:0;} 15%{opacity:1;} 100%{transform:translateY(110vh); opacity:0;} }
+  </style>
+</head>
+<body>
+
+  <audio id="mySong" loop>
+    <source src="song.m4a" type="audio/mpeg">
+  </audio>
+
+  <iframe id="contentFrame" src=""></iframe>
+
+  <div id="mainUI">
+    <div class="bg-hearts">
+        <span>❤</span><span>❤</span><span>❤</span><span>❤</span><span>❤</span>
+    </div>
+
+    <div class="card">
+      <div class="year-badge">𝗕𝐚𝐧𝐨𝐭𝗬yy</div>
+      <div class="heart-icon">❤️</div>
+      <div class="title">اول ذكري لينا</div>
+      <div class="subtitle">...عالمك السحري بانتظارك</div>
+      <div class="password-box">
+        <input type="password" id="passwordInput" placeholder="اكتبي الباسورد">
+      </div>
+      <br>
+      <button class="enter-btn" onclick="checkPassword()"> OPEN</button>
+      <div class="error" id="errorMsg"> 🙂 كلمة السر غير صحيحة</div>
+    </div>
+  </div>
+
+  <script>
+    const correctPassword = "Love";
+    const song = document.getElementById("mySong");
+    const frame = document.getElementById("contentFrame");
+    const mainUI = document.getElementById("mainUI");
+
+    // الجزء المدمج: التأكد من إعادة تشغيل الأغنية فور انتهائها
+    song.onended = function() {
+        song.currentTime = 0;
+        song.play();
+    };
+
+    function checkPassword(){
+      const input = document.getElementById("passwordInput").value;
+      const error = document.getElementById("errorMsg");
+
+      if(input === correctPassword){
+        // تشغيل الأغنية
+        song.play().catch(e => console.log("الصوت يحتاج تفاعل أولاً"));
+        
+        frame.src = "page1.html";
+        frame.style.display = "block";
+        mainUI.style.display = "none";
+        
+        // إخفاء السكرول بعد الدخول عشان الصفحة الجديدة تكون مضبوطة
+        document.body.style.overflow = "hidden";
+      } else {
+        error.style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>

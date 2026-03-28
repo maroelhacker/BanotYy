@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>page3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            background: radial-gradient(circle, #2a0505 0%, #050101 70%, #000000 100%);
+            background-attachment: fixed;
+            font-family: 'Tajawal', sans-serif;
+            color: white;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        #hearts-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; pointer-events: none;
+        }
+
+        .story-container {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 0;
+            gap: 120px; 
+        }
+
+        .memory-card {
+            width: 90%;
+            max-width: 500px;
+            background: rgba(20, 0, 0, 0.4); 
+            backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(255, 26, 77, 0.3);
+            border-radius: 40px;
+            padding: 25px;
+            box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(80px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .memory-card.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .memory-card img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .memory-card .caption {
+            text-align: center;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            padding: 0 15px;
+        }
+
+        /* تنسيق الزر - يظهر في آخر الصفحة */
+        .button-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 100px;
+        }
+
+        #final-button {
+            opacity: 0;
+            padding: 15px 70px;
+            background: linear-gradient(to bottom, #880000 0%, #440000 100%);
+            border: 1px solid rgba(255, 26, 77, 0.4);
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            z-index: 10;
+        }
+
+        #final-button.reveal {
+            opacity: 1;
+            transform: translateY(0);
+            animation: pulse 2s infinite ease-in-out 1s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(255, 26, 77, 0.5); }
+        }
+
+        .neon-heart {
+            position: absolute;
+            color: #ff1a4d;
+            text-shadow: 0 0 10px #ff1a4d, 0 0 20px #ff1a4d;
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="hearts-bg"></div>
+
+    <div class="story-container">
+        <div class="memory-card">
+            <img src="photo1.jpg" alt="Memory 1">
+            <div class="caption">️اول مره استفزيتك 😂</div>
+        </div>
+
+        <div class="memory-card">
+            <img src="photo2.jpg" alt="Memory 2">
+            <div class="caption">اليوم ده مستحيل أنساه، كان بداية كل حاجة حلوة.. 💗</div>
+        </div>
+
+        <div class="memory-card">
+            <img src="photo3.jpg" alt="Memory 3">
+            <div class="caption">ضحكتك لسه هي أحلى نغمة بسمعها في يومي. 🥰</div>
+        </div>
+
+        <div class="button-wrapper">
+            <a href="page4.html" id="final-button">NEXT</a>
+        </div>
+    </div>
+
+    <script>
+        const observerOptions = { threshold: 0.15 };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal');
+                }
+            });
+        }, observerOptions);
+
+        // مراقبة الكروت والزر
+        document.querySelectorAll('.memory-card').forEach(card => observer.observe(card));
+        observer.observe(document.getElementById('final-button'));
+
+        function createNeonHeart() {
+            const container = document.getElementById('hearts-bg');
+            const heart = document.createElement('div');
+            heart.innerHTML = "❤";
+            heart.className = 'neon-heart';
+            const startX = Math.random() * window.innerWidth;
+            heart.style.left = startX + 'px';
+            heart.style.top = '110vh';
+            container.appendChild(heart);
+            const duration = Math.random() * 5 + 5;
+            heart.animate([
+                { top: '110vh', opacity: 0 },
+                { opacity: 0.8, offset: 0.2 },
+                { top: '-15vh', opacity: 0 }
+            ], { duration: duration * 1000, easing: 'linear' }).onfinish = () => heart.remove();
+        }
+
+        setInterval(createNeonHeart, 700);
+    </script>
+</body>
+</html>

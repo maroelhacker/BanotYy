@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>page1</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:'Poppins',sans-serif;
+      background:linear-gradient(180deg,#17000f,#39001f,#5a002b);
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+      overflow-x:hidden;
+    }
+
+    .card{
+      width:100%;
+      max-width:390px;
+      background:rgba(88, 0, 43, 0.97);
+      border-radius:28px;
+      padding:24px 18px 35px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+      box-shadow:
+        0 0 30px rgba(255, 0, 120, 0.15),
+        0 0 60px rgba(255, 0, 120, 0.08);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .top-image{
+      width:100%;
+      height:170px;
+      border-radius:28px;
+      overflow:hidden;
+      box-shadow:
+        0 0 22px #ff2ea6,
+        0 0 45px rgba(255, 46, 166, 0.35);
+      margin-bottom:28px;
+      border:2px solid rgba(255,255,255,0.07);
+      background:#2b0018;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      color:#ffcce8;
+      font-size:18px;
+    }
+
+    .top-image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter:brightness(0.88);
+      display:block;
+    }
+
+    .title{
+      font-family:'Great Vibes',cursive;
+      font-size:30px;
+      color:#fff3fb;
+      margin-bottom:8px;
+      opacity:0;
+      transform:translateY(50px);
+      animation:slideUpSlow 1.8s ease forwards;
+      animation-delay:0.3s;
+      text-shadow:0 0 10px rgba(255,255,255,0.08);
+    }
+
+    /* تم تكبير العداد */
+    .counter{
+      font-family:'Great Vibes',cursive;
+      font-size:30px;
+      color:#ffe1f0;
+      margin-bottom:32px;
+      opacity:0;
+      transform:translateY(50px);
+      animation:slideUpSlow 1.8s ease forwards;
+      animation-delay:1.2s;
+      line-height:1.8;
+      text-shadow:0 0 10px rgba(255,255,255,0.08);
+    }
+
+    .arabic-text{
+      font-family:'Amiri', serif;
+      color:#fff;
+      font-size:26px;
+      line-height:2.2;
+      margin:22px 0 28px;
+      direction:rtl;
+      text-shadow:0 0 8px rgba(255,255,255,0.08);
+    }
+
+    .line{
+      opacity:0;
+      transform:translateY(80px);
+      animation:slideUpSlow 1.9s ease forwards;
+    }
+
+    .line1{ animation-delay:2.4s; }
+    .line2{ animation-delay:4.3s; }
+    .line3{ animation-delay:6.2s; }
+    .line4{ animation-delay:8.1s; }
+
+    .footer-love{
+      font-family:'Great Vibes',cursive;
+      font-size:40px;
+      color:#fff1f8;
+      margin-top:20px;
+      opacity:0;
+      transform:translateY(70px);
+      animation:slideUpSlow 1.9s ease forwards;
+      animation-delay:10s;
+      text-shadow:0 0 12px rgba(255,255,255,0.12);
+    }
+
+    .next-btn{
+      margin-top:24px;
+      opacity:0;
+      transform:translateY(50px) scale(0.92);
+      animation:showButton 1.8s ease forwards;
+      animation-delay:11.8s;
+    }
+
+    .next-btn button{
+      border:none;
+      outline:none;
+      background:linear-gradient(90deg,#ff4fb0,#ff84d1);
+      color:white;
+      padding:14px 30px;
+      font-size:16px;
+      font-weight:600;
+      border-radius:999px;
+      cursor:pointer;
+      box-shadow:0 0 18px rgba(255,79,176,0.35);
+      transition:0.3s ease;
+      animation:pulseRomantic 2.2s ease-in-out infinite;
+    }
+
+    .next-btn button:hover{
+      transform:scale(1.08);
+      box-shadow:0 0 30px rgba(255,79,176,0.75);
+    }
+
+    .heart{
+      position:absolute;
+      color:#ff4fb0;
+      font-size:28px;
+      animation:floatHeart 3.5s ease-in-out infinite;
+      text-shadow:0 0 12px rgba(255,79,176,0.7);
+      user-select:none;
+      pointer-events:none;
+    }
+
+    .h1{ top:220px; left:18px; font-size:22px; animation-delay:0s; }
+    .h2{ top:290px; left:20px; font-size:20px; animation-delay:1s; }
+    .h3{ top:445px; left:10px; font-size:24px; animation-delay:1.8s; }
+    .h4{ top:610px; left:22px; font-size:20px; animation-delay:0.8s; }
+    .h5{ top:390px; right:14px; font-size:26px; animation-delay:1.2s; }
+    .h6{ top:685px; right:18px; font-size:28px; animation-delay:2s; }
+
+    @keyframes floatHeart{
+      0%,100%{
+        transform:translateY(0px) scale(1);
+      }
+      50%{
+        transform:translateY(-8px) scale(1.08);
+      }
+    }
+
+    @keyframes slideUpSlow{
+      from{
+        opacity:0;
+        transform:translateY(60px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @keyframes showButton{
+      from{
+        opacity:0;
+        transform:translateY(40px) scale(0.92);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+      }
+    }
+
+    @keyframes pulseRomantic{
+      0%{
+        transform:scale(1);
+        opacity:0.85;
+        box-shadow:0 0 12px rgba(255,79,176,0.25);
+      }
+      25%{
+        transform:scale(1.05);
+        opacity:1;
+        box-shadow:0 0 22px rgba(255,79,176,0.45);
+      }
+      50%{
+        transform:scale(0.98);
+        opacity:0.9;
+        box-shadow:0 0 16px rgba(255,79,176,0.35);
+      }
+      75%{
+        transform:scale(1.06);
+        opacity:1;
+        box-shadow:0 0 26px rgba(255,79,176,0.55);
+      }
+      100%{
+        transform:scale(1);
+        opacity:0.88;
+        box-shadow:0 0 14px rgba(255,79,176,0.3);
+      }
+    }
+
+    @media(max-width:430px){
+      .arabic-text{
+        font-size:23px;
+      }
+
+      .footer-love{
+        font-size:34px;
+      }
+
+      .title{
+        font-size:26px;
+      }
+
+      .counter{
+        font-size:26px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <!-- Hearts -->
+    <div class="heart h1">💗</div>
+    <div class="heart h2">💗</div>
+    <div class="heart h3">💗</div>
+    <div class="heart h4">💗</div>
+    <div class="heart h5">💗</div>
+    <div class="heart h6">💗</div>
+
+    <!-- Top Image -->
+    <div class="top-image">
+      <!-- حط اسم صورتك هنا -->
+      <img src="shima.jpg" alt="Love Image">
+    </div>
+
+    <!-- Title -->
+    <div class="title"> Since we were together </div>
+
+    <!-- Counter -->
+    <div class="counter" id="loveCounter">Loading...</div>
+
+<div class="arabic-text">
+  <div class="line line1">، عيونكِ نورٌ يملأ قلبي</div>
+  <div class="line line2">، فيها الأمانُ وفيها حُبّي </div>
+  <div class="line line3">، عيناكِ بحرٌ ولم أبلغ سواحله</div>
+  <div class="line line4">، بل تهتُ فيهِ وضاعت اتجاهاتي.</div>
+</div>
+
+    <!-- Footer -->
+    <div class="footer-love">I love you, Shaima 💗</div>
+
+   <pre>
+     
+   </pre>
+    <!-- Romantic Button -->
+    <div class="next-btn">
+      <button onclick="window.location.href='page2.html'">NEXT 💗</button>
+    </div>
+
+  </div>
+
+  <script>
+    // تاريخ البداية: 2025/3/29
+    const startDate = new Date(2025, 2, 29, 0, 0, 0);
+
+    function updateLoveCounter() {
+      const now = new Date();
+      let diff = now - startDate;
+
+      if (diff < 0) {
+        document.getElementById("loveCounter").innerHTML = "Not started yet 💗";
+        return;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / (60 * 60 * 24));
+      const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+      const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+      const seconds = totalSeconds % 60;
+
+      document.getElementById("loveCounter").innerHTML =
+        `${days} days ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    updateLoveCounter();
+    setInterval(updateLoveCounter, 1000);
+  </script>
+
+</body>
+</html>
